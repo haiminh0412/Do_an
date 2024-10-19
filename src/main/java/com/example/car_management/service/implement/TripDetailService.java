@@ -65,9 +65,9 @@ public class TripDetailService implements ITripDetailService {
 
        TripDetail tripDetail = modelMapper.map(tripDetailRequest, TripDetail.class);
 
-        if(tripDetailRepository.existsByCarAndTrip(car, trip)) {
-            throw new AppException(ErrorCode.EXIST);
-        }
+//        if(tripDetailRepository.existsByCarAndTrip(car, trip)) {
+//            throw new AppException(ErrorCode.EXIST);
+//        }
 
         // Kiểm tra nếu xe đã có lịch trình trùng thời gian
         List<TripDetail> overlappingTrips = tripDetailRepository.findOverlappingTrips(
@@ -75,6 +75,7 @@ public class TripDetailService implements ITripDetailService {
                 tripDetailRequest.getDepartureTime(),
                 tripDetailRequest.getDestinationTime()
         );
+
         if (!overlappingTrips.isEmpty()) {
             throw new AppException(ErrorCode.OVERLAPPING_SCHEDULE);
         }
@@ -111,6 +112,7 @@ public class TripDetailService implements ITripDetailService {
         // Kiểm tra nếu xe đã có lịch trình trùng thời gian
         List<TripDetail> overlappingTrips = tripDetailRepository.findOverlappingTrips(
                 car.getCarId(),
+                id,
                 tripDetailRequest.getDepartureTime(),
                 tripDetailRequest.getDestinationTime()
         );

@@ -1,3 +1,5 @@
+create database do_an_tn_v3;
+
 use do_an_tn_v3;
 
 create table Customer
@@ -147,9 +149,10 @@ CREATE TABLE SeatHold (
 );
 
 CREATE TABLE History_Booking (
-         History_ID INT NOT NULL AUTO_INCREMENT,
-         Booking_ID INT NOT NULL,
-         total_price int not null,
-         CONSTRAINT PK_History_Booking PRIMARY KEY (History_ID),
-         CONSTRAINT FK_History_Booking_ID FOREIGN KEY (Booking_ID) REFERENCES Booking(Booking_ID) ON DELETE CASCADE
+     History_ID INT NOT NULL AUTO_INCREMENT,
+     Booking_ID INT NOT NULL,
+     total_price int not null,
+     seat_count int not null,
+     CONSTRAINT PK_History_Booking PRIMARY KEY (History_ID),
+     CONSTRAINT FK_History_Booking_ID FOREIGN KEY (Booking_ID) REFERENCES Booking(Booking_ID)
 );

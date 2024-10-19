@@ -124,9 +124,10 @@ public class BookingService {
 //    }
 
     // Phương thức này sẽ chạy kiểm tra trạng thái vé liên tục mỗi 5 phút
-    @Scheduled(fixedRate = 100000) // 300000 milliseconds = 5 phút
+    @Scheduled(fixedRate = 100000) // 100000 milliseconds = 100 giây
     public void updateBookingStatus() {
         LocalDateTime now = LocalDateTime.now();
+        List<Booking> bookingsToUpdate = new ArrayList<>();
 
         // Lấy tất cả các vé có trạng thái không phải là "Cancelled"
         List<Booking> bookings = bookingRepository.findAllByStatusNot("Cancelled");
@@ -139,18 +140,40 @@ public class BookingService {
                 LocalDateTime tripStartTime = LocalDateTime.of(booking.getDepartureDate(), tripDetail.getDepartureTime());
                 LocalDateTime tripEndTime = LocalDateTime.of(booking.getDepartureDate(), tripDetail.getDestinationTime());
 
-                // Kiểm tra nếu thời gian hiện tại >= thời gian kết thúc của chuyến xe
+                // Cập nhật trạng thái vé
                 if (now.isAfter(tripEndTime) || now.isEqual(tripEndTime)) {
-                    // Cập nhật trạng thái vé thành "Completed"
                     booking.setStatus("Completed");
-                }
-                // Nếu thời gian hiện tại chưa tới thời gian khởi hành
-                else if (now.isBefore(tripStartTime)) {
-                    // Cập nhật trạng thái vé thành "Confirmed"
+                } else if (now.isBefore(tripStartTime)) {
                     booking.setStatus("Confirmed");
                 }
-                bookingRepository.save(booking);
+
+                // Nếu trạng thái có thay đổi, thêm vào danh sách để lưu
+                bookingsToUpdate.add(booking);
             }
         }
+
+        // Lưu tất cả các vé đã cập nhật một lần
+        if (!bookingsToUpdate.isEmpty()) {
+            bookingRepository.saveAll(bookingsToUpdate);
+
+            // Cập nhật lịch sử cho từng booking
+            for (Booking booking : bookingsToUpdate) {
+             //   updateStatus(booking);
+            }
+        }
+    }
+
+    private void updateStatus(Booking booking) {
+        if(booking == null)
+            return;
+
+        BookingDTO bookingDTO = modelMapper.map(booking, BookingDTO.class);
+        HistoryBookingDTO historyBookingDTO = modelMapper.map(historyBookingsService.getHistoryBookingById(bookingDTO.getBookingId()), HistoryBookingDTO.class);
+        HistoryBookingDTO historyBookingDTOResponse = HistoryBookingDTO.builder()
+                .booking(bookingDTO)
+                .seatCount(historyBookingDTO.getSeatCount())
+                .totalPrice(historyBookingDTO.getTotalPrice())
+                .build();
+        historyBookingsService.createHistoryBooking(historyBookingDTOResponse);
     }
 }

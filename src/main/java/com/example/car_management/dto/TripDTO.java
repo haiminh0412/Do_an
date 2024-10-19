@@ -35,10 +35,10 @@ public class TripDTO implements Serializable {
     private LocalDateTime updatedAt;
 
     public String getDestination() {
-        return StringUtils.normalizeString(this.destination.trim());
+        return StringUtils.normalizeString(this.destination);
     }
 
     public String getDeparture() {
-        return StringUtils.normalizeString(this.departure.trim());
+        return StringUtils.normalizeString(this.departure);
     }
 }

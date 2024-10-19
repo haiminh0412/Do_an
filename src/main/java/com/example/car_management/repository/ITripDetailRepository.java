@@ -94,6 +94,17 @@ public interface ITripDetailRepository extends JpaRepository<TripDetail, Integer
             @Param("destinationTime") LocalTime destinationTime
     );
 
+    @Query("SELECT td FROM TripDetail td WHERE td.car.carId = :carId " +
+            "AND td.tripDetailId != :tripDetailId " +  // Loại trừ chuyến hiện tại
+            "AND (:departureTime < td.destinationTime AND :destinationTime > td.departureTime)")
+    List<TripDetail> findOverlappingTrips(
+            @Param("carId") Integer carId,
+            @Param("tripDetailId") Integer tripDetailId,  // Thêm tham số cho ID của chuyến hiện tại
+            @Param("departureTime") LocalTime departureTime,
+            @Param("destinationTime") LocalTime destinationTime
+    );
+
+
     @Override
     Page<TripDetail> findAll(Pageable pageable);
 }
