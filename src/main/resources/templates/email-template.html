@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông báo đặt vé xe thành công</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .ticket-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .ticket-header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .ticket-body {
+            padding: 30px;
+        }
+        .ticket-footer {
+            background-color: #f1f3f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+        }
+        .detail-row {
+            margin-bottom: 10px;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #495057;
+        }
+        .detail-value {
+            color: #212529;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="ticket-container">
+        <div class="ticket-header">
+            <h2 class="mb-0">Thông báo đặt vé xe thành công</h2>
+        </div>
+        <div class="ticket-body">
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Booking ID:</div>
+                <div class="col-sm-7 detail-value" th:text="${bookingId}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Họ và Tên:</div>
+                <div class="col-sm-7 detail-value" th:text="${name}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Email:</div>
+                <div class="col-sm-7 detail-value" th:text="${email}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Số điện thoại:</div>
+                <div class="col-sm-7 detail-value" th:text="${phoneNumber}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Địa điểm đi:</div>
+                <div class="col-sm-7 detail-value" th:text="${departure}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Địa điểm đến:</div>
+                <div class="col-sm-7 detail-value" th:text="${destination}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Thời gian xuất phát:</div>
+                <div class="col-sm-7 detail-value" th:text="${departureTime}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Thời gian đến:</div>
+                <div class="col-sm-7 detail-value" th:text="${destinationTime}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Nơi đón:</div>
+                <div class="col-sm-7 detail-value" th:text="${startDestination}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Nơi trả:</div>
+                <div class="col-sm-7 detail-value" th:text="${endDestination}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Ghế đã đặt:</div>
+                <div class="col-sm-7 detail-value" th:text="${numberSeat}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Ngày đi:</div>
+                <div class="col-sm-7 detail-value" th:text="${departureDate}"></div>
+            </div>
+            <div class="row detail-row">
+                <div class="col-sm-5 detail-label">Tổng số tiền:</div>
+                <div class="col-sm-7 detail-value"><span th:text="${totalPrice}"></span> VNĐ</div>
+            </div>
+        </div>
+        <div class="ticket-footer">
+            <p class="mb-1">Anh/Chị vui lòng kiểm tra và nhớ lịch đi. Mọi thắc mắc liên hệ số điện thoại: <strong>0394621961</strong></p>
+            <p class="mb-0"><strong>Nhà xe Hải Minh</strong></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

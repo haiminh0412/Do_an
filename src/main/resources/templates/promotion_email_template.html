@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Code</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #555555;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        strong {
+            color: #d9534f;
+        }
+        .promotion-details {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #e9e9e9;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .promotion-details strong {
+            color: #5bc0de;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #888888;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Special Promotion Just for You!</h1>
+    <p>Dear customer,</p>
+    <p>We are excited to offer you a special promotion code: <strong th:text="${promotion.code}">Promotion Code</strong>.</p>
+
+    <div class="promotion-details">
+        <p>Description: <span th:text="${promotion.description}">Description</span></p>
+        <p>Discount: <strong th:text="${promotion.discountPercentage} + '%'">Discount Percentage</strong></p>
+        <p>This promotion is valid from <strong th:text="${promotion.startDate}">Start Date</strong> to <strong th:text="${promotion.endDate}">End Date</strong>.</p>
+    </div>
+
+    <p>Use this code during your next purchase to receive the discount!</p>
+    <br>
+    <p>Best regards,</p>
+    <p>Your Company Team</p>
+
+    <div class="footer">
+        <p>If you have any questions, feel free to contact us at support@example.com</p>
+    </div>
+</div>
+</body>
+</html>
