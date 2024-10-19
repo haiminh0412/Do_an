@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông báo nhắc nhở chuyến đi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #333;
+        }
+        .content {
+            padding: 20px 0;
+        }
+        .content p {
+            margin: 10px 0;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Nhắc nhở chuyến đi sắp khởi hành</h1>
+    </div>
+    <div class="content">
+        <p>Xin chào, <strong th:text="${name}">Khách hàng</strong>,</p>
+        <p>Chúng tôi muốn nhắc nhở bạn rằng chuyến xe của bạn sắp khởi hành:</p>
+        <ul>
+            <li><strong>Điểm khởi hành:</strong> <span th:text="${startDestination}">Điểm khởi hành</span></li>
+            <li><strong>Điểm đến:</strong> <span th:text="${endDestination}">Điểm đến</span></li>
+            <li><strong>Thời gian khởi hành:</strong> <span th:text="${departureTime}">Thời gian khởi hành</span></li>
+            <li><strong>Thời gian đến:</strong> <span th:text="${destinationTime}">Thời gian đến</span></li>
+        </ul>
+        <p>Vui lòng đảm bảo bạn đã chuẩn bị đầy đủ và có mặt tại điểm khởi hành trước thời gian khởi hành ít nhất 15 phút.</p>
+        <p>Nếu bạn có bất kỳ câu hỏi nào hoặc cần thay đổi thông tin, vui lòng liên hệ với chúng tôi.</p>
+    </div>
+    <div class="footer">
+        <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>
+        <p>Chúc bạn có một chuyến đi an toàn và thuận lợi!</p>
+    </div>
+</div>
+</body>
+</html>
