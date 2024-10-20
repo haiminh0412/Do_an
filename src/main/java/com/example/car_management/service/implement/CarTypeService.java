@@ -19,7 +19,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -156,6 +158,38 @@ public class CarTypeService implements ICarTypeService {
         return this.findAllPaginationWithSortBy(pageSize, pageNo, null);
     }
 
+    public int numMatchingSubseq(String s, String[] words) {
+
+        Map<String,Integer> map = new HashMap<>();
+        for(String str:words){
+            map.put(str,map.getOrDefault(str,0)+1);
+        }
+
+        int ans = 0;
+        char ch[] = s.toCharArray();
+
+        for(String str:map.keySet()){
+
+            char temp[] = str.toCharArray();
+            int i = 0;
+            int j = 0;
+
+            while(i<ch.length && j<temp.length){
+                if(ch[i]==temp[j]){
+                    i++;
+                    j++;
+                }else{
+                    i++;
+                }
+            }
+
+            if(j==temp.length){
+                ans+=map.get(str);
+            }
+        }
+        return ans;
+    }
+
     public CarTypePageResponse findAllPaginationWithSearch(Integer pageSize, Integer pageNo, String name) {
         // Tạo đối tượng phân trang
         CarTypePageResponse carTypePageResponse = new CarTypePageResponse(pageSize, pageNo * pageSize);
@@ -163,7 +197,7 @@ public class CarTypeService implements ICarTypeService {
         // Tìm kiếm theo tên và phân trang
         Page<CarType> carTypePageResult = carTypeRepository.findByNameContainingIgnoreCase(name, carTypePageResponse);
 
-        // Chuyển đổi kết quả thành DTO
+//         Chuyển đổi kết quả thành DTO
         List<CarTypeDTO> carTypes = carTypePageResult.hasContent()
                 ? this.convertToCarTypeDTO(carTypePageResult.getContent())
                 : new ArrayList<>();

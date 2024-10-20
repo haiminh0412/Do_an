@@ -45,26 +45,19 @@ public class CarService implements ICarService {
         return seats >= 4;
     }
 
-    // Regex pattern to validate Vietnamese license plates
-    private static final String VIETNAM_LICENSE_PLATE_REGEX =
-            "^[0-9]{2}[A-Z]{1}-[0-9]{4,5}$";
+    // Biểu thức chính quy để kiểm tra biển số ô tô hợp lệ ở Việt Nam
+    private static final String LICENSE_PLATE_REGEX = "^[0-9]{2}[A-Z][0-9]{1}-[0-9]{4,5}$";
 
-    /**
-     * Method to validate if the car license plate is valid based on the Vietnamese standard
-     *
-     * @param licensePlate the car's license plate to validate
-     * @return true if valid, false otherwise
-     */
+    // Phương thức kiểm tra biển số hợp lệ
     public boolean isValidLicensePlate(String licensePlate) {
-        if (licensePlate == null || licensePlate.isEmpty()) {
-            return false;
-        }
+        // Tạo đối tượng Pattern từ regex
+        Pattern pattern = Pattern.compile(LICENSE_PLATE_REGEX);
 
-        // Normalize the license plate (remove extra spaces, convert to uppercase)
-        licensePlate = licensePlate.trim().toUpperCase();
+        // So khớp biển số xe với biểu thức chính quy
+        Matcher matcher = pattern.matcher(licensePlate);
 
-        // Validate license plate against the regex
-        return licensePlate.matches(VIETNAM_LICENSE_PLATE_REGEX);
+        // Trả về true nếu khớp, ngược lại trả về false
+        return matcher.matches();
     }
 
     @Override

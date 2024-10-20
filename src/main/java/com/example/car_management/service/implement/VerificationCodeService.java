@@ -51,23 +51,51 @@ public class VerificationCodeService {
     @Autowired
     private final ModelMapper modelMapper;
 
+//    public VerificationCodeResponse confirmCancellation(final Integer bookingId) {
+//        // Tìm BookingDTO từ bookingId
+//        BookingDTO bookingDTO = bookingService.findById(bookingId);
+//        Booking booking = modelMapper.map(bookingDTO, Booking.class);
+//
+//        // Kiểm tra xem mã xác nhận đã tồn tại chưa
+//        Optional<VerificationCode> existingVerificationCode = verificationCodeRepository.findByBookingAndType(
+//                booking, VerificationCodeType.CANCEL_TICKET.getDescription());
+//
+//        if (existingVerificationCode.isPresent()) {
+//            // Nếu mã đã tồn tại, không tạo mã mới và không gửi email lại
+//            VerificationCodeResponse verificationCodeResponse = modelMapper.map(existingVerificationCode.get(), VerificationCodeResponse.class);
+//            verificationCodeResponse.setBooking(bookingDTO);
+//            return verificationCodeResponse;
+//        }
+//
+//        // Nếu chưa có mã xác nhận, tạo mã mới
+//        String cancelCode = codeGeneratorService.generateRandomCode();
+//
+//        VerificationCode verificationCode = VerificationCode.builder()
+//                .code(cancelCode)
+//                .type(VerificationCodeType.CANCEL_TICKET.getDescription())
+//                .booking(booking)
+//                .build();
+//
+//        // Lưu mã xác nhận vào CSDL
+//        booking.addVerificationCode(verificationCode);
+//        VerificationCode newVerificationCode = verificationCodeRepository.save(verificationCode);
+//
+//        // Tạo phản hồi cho mã xác nhận
+//        VerificationCodeResponse verificationCodeResponse = modelMapper.map(newVerificationCode, VerificationCodeResponse.class);
+//        verificationCodeResponse.setBooking(bookingDTO);
+//
+//        // Gửi email xác nhận hủy vé
+//        emailService.sendCancellationConfirmationEmail(cancelCode, bookingDTO);
+//
+//        return verificationCodeResponse;
+//    }
+
     public VerificationCodeResponse confirmCancellation(final Integer bookingId) {
         // Tìm BookingDTO từ bookingId
         BookingDTO bookingDTO = bookingService.findById(bookingId);
         Booking booking = modelMapper.map(bookingDTO, Booking.class);
 
-        // Kiểm tra xem mã xác nhận đã tồn tại chưa
-        Optional<VerificationCode> existingVerificationCode = verificationCodeRepository.findByBookingAndType(
-                booking, VerificationCodeType.CANCEL_TICKET.getDescription());
-
-        if (existingVerificationCode.isPresent()) {
-            // Nếu mã đã tồn tại, không tạo mã mới và không gửi email lại
-            VerificationCodeResponse verificationCodeResponse = modelMapper.map(existingVerificationCode.get(), VerificationCodeResponse.class);
-            verificationCodeResponse.setBooking(bookingDTO);
-            return verificationCodeResponse;
-        }
-
-        // Nếu chưa có mã xác nhận, tạo mã mới
+        // Tạo mã xác nhận hủy vé mới
         String cancelCode = codeGeneratorService.generateRandomCode();
 
         VerificationCode verificationCode = VerificationCode.builder()

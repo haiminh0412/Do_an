@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/verification-code")
 @AllArgsConstructor
-public class VerificationCodeController {
+public class  VerificationCodeController {
     private final VerificationCodeService verificationCodeService;
 
     @GetMapping("/{bookingId}")
